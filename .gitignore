@@ -1,0 +1,10 @@
+# logs and generated files
+##########################
+*.log	
+*.csv
+
+# node modules
+node_modules
+
+# lock files
+./yarn.lock
