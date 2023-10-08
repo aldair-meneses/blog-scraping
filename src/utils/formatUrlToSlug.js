@@ -1,0 +1,1 @@
+export const formatUrlToSlug = (url) => new URL(url).pathname.replace(/^.+[/](?!$)/,'').replace('/');
