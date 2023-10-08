@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "json2csv": "^6.0.0-alpha.2",
     "puppeteer": "^21.3.6"
