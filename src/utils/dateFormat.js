@@ -1,4 +1,3 @@
-
 export const formatDates = (raw_date) => {
 
     const date = raw_date.replace('h', ':').split(',').join('');

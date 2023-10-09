@@ -1,16 +1,15 @@
 import { blogContent } from './src/models/contentData.js';
-import { blogContentSelectors } from './src/models/contentSelectors.js';
-import { blogNavigation } from './src/models/contentSelectors.js';
+import { blogContentSelectors } from './src/models/blogSelectors.js';
+import { blogNavigation } from './src/models/blogSelectors.js';
 import { scrapPagination } from './src/utils/pagination.js';
 
 import { formatDates } from './src/utils/dateFormat.js';
 import { formatImageUrl } from './src/utils/formatImageUrl.js';
+import { blog } from './src/models/blogSelectors.js';
 
 import puppeteer from 'puppeteer';
 import json2csv from 'json2csv';
 import fs from 'fs';
-
-const baseUrl = 'https://safrasecifras.com.br';
 
 (async () => {
     console.log('iniciando navegador...')
@@ -20,7 +19,7 @@ const baseUrl = 'https://safrasecifras.com.br';
     });
     const page = await browser.newPage();
 
-    await page.goto(`${baseUrl}/blog`);
+    await page.goto(`${blog.baseUrl}/blog`);
     
     console.log('iniciando scraping...')
     for (blogNavigation.pageNumber; blogNavigation.pageNumber <= blogNavigation.lastPage; blogNavigation.pageNumber++) {
