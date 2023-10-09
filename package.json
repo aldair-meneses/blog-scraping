@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "json2csv": "^6.0.0-alpha.2",
     "puppeteer": "^21.3.6"
   }
