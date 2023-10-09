@@ -12,16 +12,16 @@ export const scrapPagination =  async function(browser, page, blogNavigation, bl
     const nextPageButton = await page.waitForSelector(blogNavigation.nextPageButtonSelector);
     
     // // TODO - Using this as a case for debug mode
-    if(blogNavigation.pageNumber < 2){
-        await nextPageButton.click();
-        console.log(blogNavigation.pageNumber)
-        return;
-    }
+    // if(blogNavigation.pageNumber < 2){
+    //     await nextPageButton.click();
+    //     console.log(blogNavigation.pageNumber)
+    //     return;
+    // }
 
     const postLinks = await page.$$(blogContentSelectors.linkSelector);
 
     try {
-        const postFeaturedImages = await page.waitForSelector(blogContentSelectors.featuredImageSelector, { timeout: 5000 });
+        const postFeaturedImages = await page.waitForSelector(blogContentSelectors.featuredImageSelector, { timeout: 2000 });
     
         if (postFeaturedImages) {
             const featuredImageAttributes = await page.$$eval(blogContentSelectors.featuredImageSelector, (images, isFirstPage) => {

@@ -4,7 +4,7 @@ export const scrapSinglePost = async function(browser, postLink, blogContent, bl
     await page.goto(postLink);
 
     try {
-        const postTags = await page.waitForSelector(blogContentSelector.tagsSelector, {timeout: 5000});
+        const postTags = await page.waitForSelector(blogContentSelector.tagsSelector, {timeout: 2000});
         if (postTags) {
             const tags = await page.evaluate((postTags) => {
                 const tagsChildsNode = postTags.children;
@@ -17,7 +17,7 @@ export const scrapSinglePost = async function(browser, postLink, blogContent, bl
     }
 
     try {
-        const postContent = await page.waitForSelector(blogContentSelector.contentSelector, {timeout: 5000});
+        const postContent = await page.waitForSelector(blogContentSelector.contentSelector, {timeout: 2000});
         if (postContent) {
             const content = await page.evaluate(postContent => postContent.innerHTML, postContent);
             blogContent.content.push(content);
@@ -27,7 +27,7 @@ export const scrapSinglePost = async function(browser, postLink, blogContent, bl
         console.log('Trying to find a video selector...')   
         
         try {
-            const videoContent = await page.waitForSelector(blogContentSelector.videoSelector, { timeout: 5000 });
+            const videoContent = await page.waitForSelector(blogContentSelector.videoSelector, { timeout: 2000 });
             if (videoContent) {
                 const content = await page.evaluate(videoContent => videoContent.querySelector('iframe').outerHTML, videoContent);
                 blogContent.content.push(content);
