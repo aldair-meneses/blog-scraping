@@ -8,3 +8,6 @@ node_modules
 
 # lock files
 ./yarn.lock
+
+# config file
+config.yaml
