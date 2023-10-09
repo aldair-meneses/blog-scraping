@@ -1,0 +1,19 @@
+blog:
+  baseUrl: https://example.com
+
+blogContentSelectors:
+  titleSelector: '.your-title-selector'
+  contentSelector: '.your-content-selector'
+  excerptSelector: '.your-excerpt-selector'
+  tagSelector: '.your-tag-selector'
+  tagsSelector: '.your-tags-selector'
+  dateSelector: '.your-date-selector'
+  featuredImageSelector: '.your-featured-image-selector'
+  videoSelector: '.your-video-selector'
+  linkSelector: '.your-link-selector'
+
+blogNavigation:
+  pageNumber: 1
+  nextPageButtonSelector: '.your-next-page-button-selector'
+  postsPerPage: 10
+  lastPage: 1
