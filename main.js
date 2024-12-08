@@ -1,11 +1,11 @@
-import { blogContent } from './src/models/contentData.js';
-import { blogContentSelectors } from './src/models/blogSelectors.js';
-import { blogNavigation } from './src/models/blogSelectors.js';
+import { blogContent } from './src/model/contentData.js';
+import { blogContentSelectors } from './src/model/blogSelectors.js';
+import { blogNavigation } from './src/model/blogSelectors.js';
 import { scrapPagination } from './src/utils/pagination.js';
 
 import { formatDates } from './src/utils/dateFormat.js';
 import { formatImageUrl } from './src/utils/formatImageUrl.js';
-import { blog } from './src/models/blogSelectors.js';
+import { blog } from './src/model/blogSelectors.js';
 
 import puppeteer from 'puppeteer';
 import json2csv from 'json2csv';
@@ -17,9 +17,11 @@ import fs from 'fs';
     const browser = await puppeteer.launch({
         headless: 'new'
     });
-    const page = await browser.newPage();
 
-    await page.goto(`${blog.baseUrl}/blog`);
+    const page = await browser.newPage();
+    const { baseUrl, blogSlug } = blog;
+
+    await page.goto(`${baseUrl}/${blogSlug}`);
     
     console.log('iniciando scraping...')
     for (blogNavigation.pageNumber; blogNavigation.pageNumber <= blogNavigation.lastPage; blogNavigation.pageNumber++) {
