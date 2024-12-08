@@ -1,4 +1,8 @@
 export const formatImageUrl = (rawImageUrl) => {
-    const formattedImageUrl = rawImageUrl.replace('url(', '').replace(')', '');
+    let formattedImageUrl = rawImageUrl.replace('url(', '').replace(')', '');
+    const urlParts = formattedImageUrl.split('/v1/');
+    if (urlParts) {
+        formattedImageUrl = urlParts[0];
+    }
     return formattedImageUrl;
 };

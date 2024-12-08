@@ -1,7 +1,27 @@
+import { formatWixImageUrl } from "../custom-formaters/formatWixImage.js";
+
 export const scrapSinglePost = async function(browser, postLink, blogContent, blogContentSelector) {
 
     const page = await browser.newPage();
     await page.goto(postLink);
+
+    try {
+        const metaDescription = await page.$eval('meta[name="description"]', element => element.getAttribute('content'));
+        if (metaDescription) {
+            blogContent.metaDescription.push(metaDescription);
+        }
+    } catch (error) { 
+        console.error('An error occurred while getting the meta description:', error.message);
+    }
+
+    try {
+        const seoTitle = await page.$eval('title', element => element.textContent);
+        if (seoTitle) {
+            blogContent.seoTitle.push(seoTitle);
+        }
+    } catch (error) {
+        console.error('An error occurred while getting the SEO title:', error.message);
+    }
 
     try {
         const postTags = await page.waitForSelector(blogContentSelector.tagsSelector, {timeout: 2000});
@@ -13,13 +33,27 @@ export const scrapSinglePost = async function(browser, postLink, blogContent, bl
             blogContent.tags.push(tags)
         }
     }  catch (error) {
-        console.error(error.message)
+        console.error('An error ocurred while getting the tags, any tags found for this post. \n', error.message);
     }
 
     try {
         const postContent = await page.waitForSelector(blogContentSelector.contentSelector, {timeout: 2000});
         if (postContent) {
-            const content = await page.evaluate(postContent => postContent.innerHTML, postContent);
+            await page.exposeFunction('formatWixImageUrl', formatWixImageUrl);
+            const content = await page.evaluate((blogContentSelector) => {
+                document.querySelectorAll('[data-hook="imageViewer"]').forEach(imageViewerElement => {
+                    const img = imageViewerElement.querySelector('img');
+                    if (img) {
+                        let imageUrlParts = img.src.split('/v1/');
+                        if (imageUrlParts.length > 0) {
+                            img.src = imageUrlParts[0];
+                        }
+                        imageViewerElement.parentNode.replaceChild(img, imageViewerElement);
+                    }
+                });
+                
+                return document.querySelector(blogContentSelector.contentSelector).innerHTML;
+            }, blogContentSelector);
             blogContent.content.push(content);
         }
     } catch (error) {
@@ -40,4 +74,5 @@ export const scrapSinglePost = async function(browser, postLink, blogContent, bl
     }
     
     await page.close();
+    return;
 }
