@@ -5,6 +5,7 @@ blogContentSelectors:
   titleSelector: '.your-title-selector'
   contentSelector: '.your-content-selector'
   excerptSelector: '.your-excerpt-selector'
+  categorySelector: '.your-category-selector'
   tagSelector: '.your-tag-selector'
   tagsSelector: '.your-tags-selector'
   dateSelector: '.your-date-selector'
